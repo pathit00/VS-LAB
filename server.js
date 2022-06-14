@@ -10,7 +10,7 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'local',
+    password: 'root',
     database: 'verteiltesysteme'
 });
 
@@ -25,6 +25,18 @@ const app = express();
 app.get('/', function (request, response) {
     // Render login template
     response.sendFile(path.join(__dirname + '/welcome.html'));
+});
+
+
+// http://localhost:3000/todos/
+// (returns a list of todos)
+app.get('/todos', function (request, response) {
+    connection.query("SELECT * FROM verteiltesysteme.todos", function (error, results) {
+        // If there is an issue with the query, output the error
+        if (error) throw error;
+        console.log(results);
+    });
+    
 });
 
 app.listen(3000);
