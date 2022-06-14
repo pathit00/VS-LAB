@@ -1,7 +1,5 @@
 const http = require('http')
 const fs = require('fs');
-
-
 const express = require("express");
 const path = require("path");
 
@@ -10,7 +8,7 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'root',
+    password: 'local',
     database: 'verteiltesysteme'
 });
 
@@ -36,7 +34,7 @@ app.get('/todos', function (request, response) {
         if (error) throw error;
         console.log(results);
     });
-    
+
 });
 
 app.listen(3000);
