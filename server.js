@@ -2,8 +2,28 @@ const http = require('http')
 const fs = require('fs');
 const express = require("express");
 const path = require("path");
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUI = require('swagger-ui-express');
 
 var mysql = require('mysql');
+
+const app = express();
+
+const swaggerOptions = {
+    swaggerDefinition: {
+        info: {
+            title: "Customer API",
+            description: "Customer API Information",
+            contact: {
+                name: "Patrick und Dustin"
+            },
+            servers: ["http://localhost:3000"]
+        }
+    },
+    apis: ["server.js"]
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 var connection = mysql.createConnection({
     host: 'localhost',
@@ -17,7 +37,9 @@ connection.connect(function (err) {
     console.log("Connected to Database!");
 });
 
-const app = express();
+
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+
 
 // http://localhost:3000/
 app.get('/', function (request, response) {
