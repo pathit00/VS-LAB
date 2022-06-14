@@ -51,11 +51,39 @@ app.get('/', function (request, response) {
 // http://localhost:3000/todos/
 
 /**
+ * 
+ * @swagger
+ *   components:
+ *      schemas:
+ *      Todos:
+ *          type:object
+ *      required:
+ *          -id
+ *          -priority
+ *          -todo
+ *      properties:
+ *  	    id:
+ *              type: string
+ *              description: Auto generated ID
+ *          priority:
+ *              type: integer
+ *              description: Priority of a todo
+ *          todo:
+ *              type: string
+ *              description: Text of the todo
+ *          example:
+ *              id: 1
+ *              priority: 5
+ *              todo: Zähne putzen
+ * 
+ */
+
+/**
  * @swagger
  * /todos:
  *  get:
- *      description: Get all todos
-    responses:
+ *      summary: Get all todos
+ *      responses:
  *       200:
  *         description: "Successful response"
  *       400:
