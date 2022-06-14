@@ -24,7 +24,7 @@ const swaggerOptions = {
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
-
+console.log(swaggerDocs);
 var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -49,12 +49,24 @@ app.get('/', function (request, response) {
 
 
 // http://localhost:3000/todos/
-// (returns a list of todos)
+
+/**
+ * @swagger
+ * /todos:
+ *  get:
+ *      description: Get all todos
+    responses:
+ *       200:
+ *         description: "Successful response"
+ *       400:
+ *          description: "Something went wrong"
+ * 
+ */
 app.get('/todos', function (request, response) {
     connection.query("SELECT * FROM verteiltesysteme.todos", function (error, results) {
         // If there is an issue with the query, output the error
         if (error) throw error;
-        console.log(results);
+        response.send(results);
     });
 
 });
