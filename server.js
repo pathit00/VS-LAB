@@ -144,7 +144,30 @@ app.get('/', function (request, response) {
  *          400:
  *              description: "Something went wrong"
  * 
+ * /todos/:
+ *  post:
+ *     summary: Creates a new user.
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: body
+ *         name: user
+ *         description: The user to create.
+ *         schema:
+ *           type: object
+ *           required:
+ *             - userName
+ *           properties:
+ *             priority:
+ *               type: integer
+ *             todo:
+ *               type: string 
+ *          
+ * 
+ * 
  */
+
+
 
 // GET /todos/ (returns a list of todos)
 app.get('/todos', function (request, response) {
