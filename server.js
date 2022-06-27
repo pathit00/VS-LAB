@@ -146,17 +146,15 @@ app.get('/', function (request, response) {
  * 
  * /todos/:
  *  post:
- *     summary: Creates a new user.
+ *     summary: Creates a new todo.
  *     consumes:
  *       - application/json
  *     parameters:
  *       - in: body
- *         name: user
- *         description: The user to create.
+ *         name: todo
+ *         description: The todo to create.
  *         schema:
  *           type: object
- *           required:
- *             - userName
  *           properties:
  *             priority:
  *               type: integer
