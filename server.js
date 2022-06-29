@@ -6,6 +6,9 @@ const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
 
 var mysql = require('mysql');
+const { response } = require('express');
+
+var bodyParser = require('body-parser')
 
 const app = express();
 
@@ -39,6 +42,8 @@ connection.connect(function (err) {
 
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+
+app.use(bodyParser.json())
 
 
 // http://localhost:3000/
@@ -146,25 +151,39 @@ app.get('/', function (request, response) {
  * 
  * /todos/:
  *  post:
- *     summary: Creates a new todo.
- *     consumes:
- *       - application/json
- *     parameters:
- *       - in: body
- *         name: todo
- *         description: The todo to create.
- *         schema:
- *           type: object
- *           properties:
- *             priority:
- *               type: integer
- *             todo:
- *               type: string 
- *          
- * 
- * 
+ *      summary: Creates a new todo
+ *      consumes:
+ *          - application/json
+ *      parameters:
+ *          - in: body
+ *            name: user
+ *            description: The todo to create
+ *            schema:
+ *              type: object
+ *              required:
+ *                  - id
+ *              properties:
+ *                  priority:
+ *                      type: integer
+ *                  todo:
+ *                      type: string
+ *      responses:
+ *          200:
+ *              description: Created
+ *
  */
 
+//POST /todos/ (send/receive JSON object)
+
+app.post('/todos', function(req,res){
+    
+    connection.query("INSERT INTO verteiltesysteme.todos(priority,todo) VALUES ('"+req.body.priority+"','"+req.body.todo+"')" ,function (error, results) {
+        if (error) throw error;
+    });
+
+    console.log(req.body.priority);
+    res.send(req.body)
+ });
 
 
 // GET /todos/ (returns a list of todos)
@@ -185,12 +204,6 @@ app.get('/todos/:name', function(req, res) {
         res.send(results);
     });
   });
-
-//POST /todos/ (send/receive JSON object)
-
-app.post('/todos/', function(req,res){
-
-});
 
 //DELETE  /todos/{name} (deletes a todo if exists)
 app.delete('/todos/:name', function(req,res){
